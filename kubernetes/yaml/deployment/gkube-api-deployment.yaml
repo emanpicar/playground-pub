@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gkube-api-deployment
+  namespace: playground-pub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gkube-api
+  template:
+    metadata:
+      labels:
+        app: gkube-api
+    spec:
+      containers:
+      - name: gkube-api
+        image: emanpicar/kubernetes-gkube-api:latest
+        resources:
+          limits:
+            memory: 128Mi
+            cpu: 500m
+        ports:
+        - containerPort: 8080
