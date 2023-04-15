@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	nvidiav1 "playground.pub/graphics/api/v1"
+	nvidiav1 "github.com/emanpicar/playground-pub/tree/todo/kubernetes/kubernetes/gkube-crd/api/v1"
 	//+kubebuilder:scaffold:imports
 )
 

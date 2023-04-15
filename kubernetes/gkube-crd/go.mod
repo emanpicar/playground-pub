@@ -1,4 +1,4 @@
-module playground.pub/graphics
+module github.com/emanpicar/playground-pub/tree/todo/kubernetes/kubernetes/gkube-crd
 
 go 1.19
 
