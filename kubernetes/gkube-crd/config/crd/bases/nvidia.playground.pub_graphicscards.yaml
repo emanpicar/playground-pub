@@ -1,0 +1,83 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.11.1
+  creationTimestamp: null
+  name: graphicscards.nvidia.playground.pub
+spec:
+  group: nvidia.playground.pub
+  names:
+    kind: GraphicsCard
+    listKind: GraphicsCardList
+    plural: graphicscards
+    singular: graphicscard
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: GraphicsCard is the Schema for the graphicscards API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: GraphicsCardSpec defines the desired state of GraphicsCard
+            properties:
+              boost_clock:
+                description: Boost Clock in GHz
+                maxLength: 4
+                minLength: 1
+                type: string
+              cuda_cores:
+                description: Something I pickup online
+                format: int32
+                maximum: 8000
+                minimum: 1000
+                type: integer
+              memory_size:
+                description: Memory in GB (e.g 8GB, 12GB)
+                type: string
+              memory_type:
+                description: Memory type
+                enum:
+                - GDDR6
+                - GDDR6X
+                type: string
+              model:
+                description: Name of the model
+                enum:
+                - "3060"
+                - 3060TI
+                - "3070"
+                - 3070TI
+                type: string
+            type: object
+          status:
+            description: GraphicsCardStatus defines the observed state of GraphicsCard
+            properties:
+              active:
+                description: PodName of the active GraphicsCard node.
+                type: string
+              standby:
+                description: PodNames of the standby GraphicsCard nodes.
+                items:
+                  type: string
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,17 @@
+apiVersion: nvidia.playground.pub/v1
+kind: GraphicsCard
+metadata:
+  labels:
+    app.kubernetes.io/name: graphicscard
+    app.kubernetes.io/instance: graphicscard-sample
+    app.kubernetes.io/part-of: gkube-crd
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: gkube-crd
+  name: graphicscard-sample
+  namespace: playground-pub
+spec:
+  model: 3060TI
+  cuda_cores: 4864
+  boost_clock: "1.67"
+  memory_size: 8GB
+  memory_type: GDDR6X

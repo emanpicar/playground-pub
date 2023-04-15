@@ -1,0 +1,31 @@
+# permissions for end users to edit graphicscards.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: graphicscard-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: gkube-crd
+    app.kubernetes.io/part-of: gkube-crd
+    app.kubernetes.io/managed-by: kustomize
+  name: graphicscard-editor-role
+rules:
+- apiGroups:
+  - nvidia.playground.pub
+  resources:
+  - graphicscards
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - nvidia.playground.pub
+  resources:
+  - graphicscards/status
+  verbs:
+  - get
