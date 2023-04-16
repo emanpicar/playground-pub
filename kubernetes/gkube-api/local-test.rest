@@ -4,3 +4,50 @@ content-type: application/json
 
 {}
 
+### Trigger List  Pods by namespace
+GET http://localhost:8080/pods/kube-system HTTP/1.1
+content-type: application/json
+
+{}
+
+### Trigger Get Pod
+GET http://localhost:8080/pod/kube-system/kube-apiserver-docker-desktop HTTP/1.1
+content-type: application/json
+
+{}
+
+### Trigger List  graphics by namespace
+GET http://localhost:8080/graphics/playground-pub HTTP/1.1
+content-type: application/json
+
+{}
+
+### Trigger Get graphics
+GET http://localhost:8080/graphics/playground-pub/graphicscard-sample HTTP/1.1
+content-type: application/json
+
+{}
+
+### Trigger Create graphics
+POST http://localhost:8080/graphics HTTP/1.1
+content-type: application/json
+
+{
+    "metadata": {
+        "name": "via-create-api-1",
+        "namespace": "playground-pub"
+    },
+    "spec": {
+        "model": "3060TI",
+        "cuda_cores": 4864,
+        "boost_clock": "1.67",
+        "memory_size": "8GB",
+        "memory_type": "GDDR6X"
+    }
+}
+
+### Trigger Delete graphics
+DELETE http://localhost:8080/graphics/playground-pub/via-create-api-1 HTTP/1.1
+content-type: application/json
+
+{}

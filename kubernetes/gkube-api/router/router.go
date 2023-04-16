@@ -1,58 +1,44 @@
 package router
 
 import (
-	"math/rand"
-	"net/http"
-	"time"
+	"gkube-api/kubernetes"
 
 	"github.com/gin-gonic/gin"
-	"github.com/juju/errors"
+	coreV1 "k8s.io/api/core/v1"
 )
 
 type (
 	Router interface {
-		Init()
-
 		Plain(c *gin.Context, in *PlainIn) (*PlainOut, error)
-		// GetSAToken(c *gin.Context, in *PlainIn) (*PlainOut, error)
+		// GetSAToken(c *gin.Context, in *SharedIn) (*coreV1.PodList, error)
 		// GetConfigMapsSecrets(c *gin.Context, in *PlainIn) (*PlainOut, error)
-		// GetPodByID(c *gin.Context, in *PlainIn) (*PlainOut, error)
-		// ListPods(c *gin.Context, in *PlainIn) (*PlainOut, error)
-		// GetStockCRD(c *gin.Context, in *PlainIn) (*PlainOut, error)
-		// ListStockCRD(c *gin.Context, in *PlainIn) (*PlainOut, error)
+		GetPodByID(c *gin.Context, in *SharedIn2) (*coreV1.Pod, error)
+		ListPods(c *gin.Context, in *SharedIn) (*coreV1.PodList, error)
+
+		CRGraphicsCard
 		// CreateStockCRD(c *gin.Context, in *PlainIn) (*PlainOut, error)
 	}
 
-	service struct{}
+	service struct {
+		kubeClient kubernetes.K8s
+	}
 
-	PlainIn  struct{}
-	PlainOut struct {
+	SharedIn struct {
+		Namespace string `path:"namespace"`
+	}
+
+	SharedIn2 struct {
+		Namespace string `path:"namespace"`
+		ID        string `path:"id"`
+	}
+
+	SAOut struct {
 		Message string
 		Now     string
 		Random  int
 	}
 )
 
-func New() Router {
-	return &service{}
-}
-
-func (s *service) Init() {
-
-}
-
-func (s *service) Plain(c *gin.Context, in *PlainIn) (*PlainOut, error) {
-	randResult := rand.Intn(505)
-	switch randResult {
-	case http.StatusBadRequest:
-		return nil, errors.NewBadRequest(nil, "so lucky - bad request!!")
-	case http.StatusForbidden:
-		return nil, errors.NewForbidden(nil, "so lucky - forbidden!!")
-	}
-
-	return &PlainOut{
-		Message: "Hello from gkube-api",
-		Now:     time.Now().Format(time.Layout),
-		Random:  randResult,
-	}, nil
+func New(k8s kubernetes.K8s) Router {
+	return &service{kubeClient: k8s}
 }
